@@ -1,7 +1,8 @@
 .\UserNetworkSettings.h
-__vm/.smartClock.vsarduino.h
-smartClock.vcxproj
-smartClock.vcxproj.filters
+__vm/*
+Release/*.*
+*.vcxproj
+*.vcxproj.filters
 UserNetworkSettings.h
 *.xml
 *.buildinfo
