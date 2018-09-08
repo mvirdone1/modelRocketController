@@ -124,8 +124,10 @@ void setup()
 	pinMode(RELAY_PIN, OUTPUT);
     digitalWrite(RELAY_PIN, LOW);
 
+    
 	pinMode(ARM_PIN, INPUT);           // set pin to input
-	digitalWrite(ARM_PIN, HIGH);       // turn on pullup resistors
+	// digitalWrite(ARM_PIN, HIGH);       // turn on pullup resistors
+    // ARM is high polarity
 
 	pinMode(FIRE_PIN, INPUT);           // set pin to input
 	digitalWrite(FIRE_PIN, HIGH);       // turn on pullup resistors
@@ -189,11 +191,11 @@ void loop()
 
 	// Handle the transition of the ARM pin
 	// debounce for 10 ms
-	if (digitalRead(ARM_PIN) == LOW && currentState == Ready)
+	if (digitalRead(ARM_PIN) == HIGH && currentState == Ready)
 	{
 		delay(DEBOUNCE_TIME_MS);
 
-		if (digitalRead(ARM_PIN) == LOW)
+		if (digitalRead(ARM_PIN) == HIGH)
 		{
 			toArmed = true;
 		}
@@ -219,12 +221,12 @@ void loop()
     // See if we're anywhere outside of ready - we're somewhere in the arming/firing process
     if (currentState != Ready && currentState != Disarming && animationComplete == false)
     {
-        // If the pin floats high - that means we've been disarmed
-        if (digitalRead(ARM_PIN) == HIGH)
+        // If the pin floats low - that means we've been disarmed
+        if (digitalRead(ARM_PIN) == LOW)
         {
             delay(DEBOUNCE_TIME_MS);
 
-            if (digitalRead(ARM_PIN) == HIGH)
+            if (digitalRead(ARM_PIN) == LOW)
             {
                 LEDWrite(RGBYellow); // Y
                 // After the debounce, scroll some text and then go into the disarming state
